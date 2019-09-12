@@ -1,0 +1,15 @@
+import os
+import runtests
+
+def test_path_select():
+	assert runtests.path_select("D:\\univ\\tests\\homework1") == True
+	assert runtests.path_select("D:\\univ\\tests") == True
+
+def test_file_select():
+	assert runtests.file_select("D:\\univ\\tests\\homework1", "test_file.py") == True
+	assert runtests.file_select("D:\\univ\\tests\\homework1", "test_") == True
+
+
+if __name__ == '__main__':
+	test_path_select()
+	test_file_select()
