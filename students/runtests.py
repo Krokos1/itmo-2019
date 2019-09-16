@@ -4,11 +4,14 @@ import sys
 import traceback
 import inspect
 
+
 def path_select(dir_name):
+	""" Returns 'True' dir exists on a computer """
 	return os.path.isdir(dir_name)
 
 
 def file_select(dir_name, file):
+	""" Returns 'True' if file has '.py' extention and starts with 'test_' """
 	if (Path(dir_name + "/" + file).suffix == '.py' and file[0:5] == "test_"):
 		return True
 
@@ -25,7 +28,6 @@ if __name__ == '__main__':
 			break
 		else:
 			print("Enter valid path")
-	print("Your dir is:", os.getcwd())
 	file_list = os.listdir(dir_name)
 	for file in file_list:
 		if (file_select(dir_name,file)):
