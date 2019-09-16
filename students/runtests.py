@@ -6,12 +6,12 @@ import inspect
 
 
 def path_select(dir_name):
-    """ Returns 'True' dir exists on a computer """
+    """Returns 'True' dir exists on a computer."""
     return os.path.isdir(dir_name)
 
 
 def file_select(dir_name, file):
-    """ Returns 'True' if file has '.py' extention and starts with 'test_' """
+    """Returns 'True' if file has '.py' extention and starts with 'test_'."""
     if (Path(dir_name + "/" + file).suffix == '.py' and file[0:5] == "test_"):
         return True
 
