@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def my_sum(first, second):
     """Returns summ."""
     return first + second
@@ -10,6 +11,6 @@ def my_mult(first, second):
     return first * second
 
 
-def my_div(first,second):
+def my_div(first, second):
     """Returns div."""
     return first / second
