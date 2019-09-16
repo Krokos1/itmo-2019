@@ -8,19 +8,20 @@ import inspect
 
 
 def path_select(dir_name):
-    """ Returns 'True' dir exists on a computer """
+    """Returns True dir exists on a computer."""
     return os.path.isdir(dir_name)
 
 
 def file_select(dir_name, file1):
-    """ Returns 'True' if file has '.py' extention and starts with 'test_' """
-    if (pathlib.Path(dir_name + '/' + file1).suffix == '.py' and file1[0:5] == 'test_'):
+    """Returns 'True' if file has .py extention and starts with test_."""
+    if (pathlib.Path(dir_name + '/' + file1).suffix == 
+        '.py' and file1[0:5] == 'test_'):
         return True
 
 
 if __name__ == '__main__':
     while True:
-        dir_name = input('Enter your path: ')  #noqa: WPS421, S322, E501
+        dir_name = input('Enter your path: ')  # noqa: WPS421, S322, E501
         print(dir_name)
         if path_select(dir_name):
             sys.path.append(dir_name)
@@ -43,12 +44,13 @@ if __name__ == '__main__':
                         try:
                             f()
                         except AssertionError:
-                            print('Test name: ' + dir(func_list)[i] + ' with path: ' + os.getcwd() + '\\' + file 
-                                + ' - fail')  #noqa: T001
+                            print('Test name: ' + dir(func_list)[i] + ' with path: ' 
+                                + os.getcwd() + '\\' + file + ' - fail')  # noqa: T001
                             exc_type, exc_value, exc_traceback = sys.exc_info()
-                            traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+                            traceback.print_exception(exc_type, exc_value, exc_traceback,
+                             limit=2, file=sys.stdout)
                         else:
-                            print('Test name: ' + dir(func_list)[i] + ' with path: ' + os.getcwd() + '\\' +file1 
-                                + ' - ok')  #noqa: T001
+                            print('Test name: ' + dir(func_list)[i] + 
+                                ' with path: ' + os.getcwd() + '\\' +file1 + ' - ok')  # noqa: T001
         else:
-            print(file1 + ' does not meet requirements')  #noqa: T001
+            print(file1 + ' does not meet requirements')  # noqa: T001
