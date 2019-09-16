@@ -1,13 +1,13 @@
 def my_sum(first, second):
-    """ Returns summ """
+    """.Returns summ."""
     return first + second
 
 
 def my_mult(first, second):
-    """ Returns mult """
+    """Returns mult."""
     return first * second
 
 
-def my_div(first,second):
-    """ Returns div """
+def my_div(first, second):
+    """Returns div."""
     return first / second
