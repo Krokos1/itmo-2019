@@ -2,8 +2,8 @@
 
 import os
 import pathlib
-import sys
 import inspect
+import sys
 import traceback
 
 
@@ -21,6 +21,7 @@ def file_select(dir_name, file1):
 
 
 def get_dirname(dir_name):
+    """Checks if dir is correct."""
     if path_select(dir_name):
         sys.path.append(dir_name)
     elif (dir_name == ''):
@@ -47,17 +48,17 @@ if __name__ == '__main__':
                         try:
                             funk()
                         except AssertionError:
-                            print('{0} {1} {2} {3}{4}{5} {6} {7}'.format(
+                            print("{0} {1} {2} {3}{4}{5} {6} {7}".format(  # noqa: T001
                                 'Test name:', dir(func_list)[counter],
                                 'with path:', os.getcwd(), '\\',
                                 file1, '- fail\n',
-                                traceback.format_exc()))  # noqa: T001
+                                traceback.format_exc()))
                         else:
-                            print('{0} {1} {2} {3}{4}{5} {6}'.format(
+                            print("{0} {1} {2} {3}{4}{5} {6}".format(  # noqa: T001
                                 'Test name:',
                                 dir(func_list)[counter],
                                 'with path:', os.getcwd(),
-                                '\\', file1, '- ok'))  # noqa: T001
+                                '\\', file1, '- ok'))
         else:
-            print('{0} {1}'.format(file1,
-            'does not meet requirements'))  # noqa: T001
+            print("{0} {1}".format(file1,  # noqa: T001
+            'does not meet requirements'))
