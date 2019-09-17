@@ -34,34 +34,40 @@ def get_dirname(dir_name):
     return dir_name
 
 
-def prints(funk, func_list, counter, file1):
-    """Program outputs."""
-    try:
-        funk()
-    except AssertionError:
-        print(  # noqa: T001
-            '{0} {1} {2} {3}{4}{5} {6} {7}'.format(
-            'Test name:',
-            dirs[counter],
-            'with path:',
-            os.getcwd(),
-            '\\',
-            file1,
-            '- fail\n',
-            traceback.format_exc(),
-            ),
-        )
-    else:
-        print('{0} {1} {2} {3}{4}{5} {6}'.format(  # noqa: T001
-            'Test name:',
-            dirs[counter],
-            'with path:',
-            os.getcwd(),
-            '\\',
-            file1,
-            '- ok',
-            ),
-        )
+def prints(dirs, func_list):
+    """Checing all given files and program outputs."""
+    for counter in range(len(dirs)):  # noqa: WPS518
+        if (dirs[counter][0] != '_'):
+            funk = getattr(func_list, dirs[counter])
+            if (inspect.ismodule(funk)):
+                __import__(dirs[counter])  # noqa: WPS220, WPS421
+            elif (inspect.isfunction(funk)):  # noqa: WPS220
+                try:
+                    funk()
+                except AssertionError:
+                    print(  # noqa: T001
+                        '{0} {1} {2} {3}{4}{5} {6} {7}'.format(
+                        'Test name:',
+                        dirs[counter],
+                        'with path:',
+                        os.getcwd(),
+                        '\\',
+                        file1,
+                        '- fail\n',
+                        traceback.format_exc(),
+                        ),
+                    )
+                else:
+                    print('{0} {1} {2} {3}{4}{5} {6}'.format(  # noqa: T001
+                        'Test name:',
+                        dirs[counter],
+                        'with path:',
+                        os.getcwd(),
+                        '\\',
+                        file1,
+                        '- ok',
+                        ),
+                    )
 
 
 if __name__ == '__main__':
@@ -72,13 +78,7 @@ if __name__ == '__main__':
         if (file_select(dir_name, file1)):
             func_list = importlib.import_module(file1[0:-3])
             dirs = dir(func_list)  # noqa: WPS421
-            for counter in range(len(dirs)):  # noqa: WPS518
-                if (dirs[counter][0] != '_'):
-                    funk = getattr(func_list, dirs[counter])
-                    if (inspect.ismodule(funk)):
-                        __import__(dirs[counter])  # noqa: WPS220, WPS421
-                    elif (inspect.isfunction(funk)):  # noqa: WPS220
-                        prints(funk, dirs, counter, file1)  # noqa: WPS220
+            prints(dirs, func_list)
         else:
             print('{0} {1}'.format(  # noqa: T001
             file1,
