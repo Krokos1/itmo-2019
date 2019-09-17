@@ -13,14 +13,13 @@ def path_select(dir_name):
 
 
 def file_select(dir_name, file1):
-    """Returns True if file has .py extention and starts with test_."""
-    if (pathlib.Path(dir_name + '/' + file1).suffix == 
-        '.py' and file1[0:5] == 'test_'):
+    """Returns True if file meets requirements."""
+    path1 = '{0} + {1} + {2}'.format(dir_name, '/', file1)
+    if (pathlib.Path(path1).suffix == '.py' and file1[0:5] == 'test_'):
         return True
 
 
 if __name__ == '__main__':
-
     dir_name = input('Enter your path: ')  # noqa: WPS421, S322, E501
     if path_select(dir_name):
         sys.path.append(dir_name)
@@ -29,6 +28,7 @@ if __name__ == '__main__':
     else:
         print('Enter valid path')  # noqa: T001
         sys.exit()
+
     file_list = os.listdir(dir_name)
     for file1 in file_list:
         if (file_select(dir_name, file1)):
@@ -42,12 +42,17 @@ if __name__ == '__main__':
                         try:
                             funk()
                         except AssertionError:
-                            print('Test name: ' + dir(func_list)[counter] + ' with path: '
-                                + os.getcwd() + '\\' + file1 + ' - fail\n'
-                                + traceback.format_exc())  # noqa: T001
+                            print('{0} {1} {2} {3}{4}{5} {6} {7}'.format(
+                                'Test name:', dir(func_list)[counter],
+                                'with path:', os.getcwd(), '\\', 
+                                file1, '- fail\n', 
+                                traceback.format_exc()))  # noqa: T001
                         else:
-                            print('Test name: ' + dir(func_list)[counter] + 
-                                ' with path: ' + os.getcwd() + '\\' +
-                                file1 + ' - ok')  # noqa: T001
+                            print('{0} {1} {2} {3}{4}{5} {6}'.format(
+                                'Test name:',
+                                dir(func_list)[counter],
+                                'with path:', os.getcwd(),
+                                '\\', file1, '- ok'))  # noqa: T001
         else:
-            print(file1 + ' does not meet requirements')  # noqa: T001
+            print('{0} {1}'.format(file1,
+            'does not meet requirements'))  # noqa: T001
