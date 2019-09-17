@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""Framework for tests."""
+import importlib
+import inspect
 import os
 import pathlib
-import inspect
 import sys
 import traceback
 
@@ -32,33 +34,54 @@ def get_dirname(dir_name):
     return dir_name
 
 
+def prints(funk, func_list, counter, file1):
+    """Program outputs."""
+    try:
+        funk()
+    except AssertionError:
+        print(  # noqa: T001
+            '{0} {1} {2} {3}{4}{5} {6} {7}'.format(
+            'Test name:',
+            dirs[counter],
+            'with path:',
+            os.getcwd(),
+            '\\',
+            file1,
+            '- fail\n',
+            traceback.format_exc(),
+            ),
+        )
+    else:
+        print('{0} {1} {2} {3}{4}{5} {6}'.format(  # noqa: T001
+            'Test name:',
+            dirs[counter],
+            'with path:',
+            os.getcwd(),
+            '\\',
+            file1,
+            '- ok',
+            ),
+        )
+
+
 if __name__ == '__main__':
     dir_name = input('Enter your path: ')  # noqa: WPS421, S322, E501
     dir_name = get_dirname(dir_name)
     file_list = os.listdir(dir_name)
     for file1 in file_list:
         if (file_select(dir_name, file1)):
-            func_list = __import__(file1[0:-3])
-            for counter in range(len(dir(func_list))):
-                if (dir(func_list)[counter][0] != '_'):
-                    funk = getattr(func_list, dir(func_list)[counter])
+            func_list = importlib.import_module(file1[0:-3])
+            dirs = dir(func_list)  # noqa: WPS421
+            for counter in range(len(dirs)):  # noqa: WPS518
+                if (dirs[counter][0] != '_'):
+                    funk = getattr(func_list, dirs[counter])
                     if (inspect.ismodule(funk)):
-                        __import__(dir(func_list)[counter])
-                    elif (inspect.isfunction(funk)):
-                        try:
-                            funk()
-                        except AssertionError:
-                            print("{0} {1} {2} {3}{4}{5} {6} {7}".format(  # noqa: T001
-                                'Test name:', dir(func_list)[counter],
-                                'with path:', os.getcwd(), '\\',
-                                file1, '- fail\n',
-                                traceback.format_exc()))
-                        else:
-                            print("{0} {1} {2} {3}{4}{5} {6}".format(  # noqa: T001
-                                'Test name:',
-                                dir(func_list)[counter],
-                                'with path:', os.getcwd(),
-                                '\\', file1, '- ok'))
+                        __import__(dirs[counter])  # noqa: WPS220, WPS421
+                    elif (inspect.isfunction(funk)):  # noqa: WPS220
+                        prints(funk, dirs, counter, file1)  # noqa: WPS220
         else:
-            print("{0} {1}".format(file1,  # noqa: T001
-            'does not meet requirements'))
+            print('{0} {1}'.format(  # noqa: T001
+            file1,
+            'does not meet requirements',
+            ),
+            )
