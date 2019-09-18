@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """Tests for framework."""
-import os
 import importlib
+import os
+
 import runtests
 
 
