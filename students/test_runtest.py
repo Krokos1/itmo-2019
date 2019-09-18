@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
+"""Tests for framework."""
 import os
-
+import importlib
 import runtests
+
+
+def test_get_dirname():
+    """Tests for 'get_dirname' function."""
+    assert runtests.get_dirname('') == os.getcwd()
 
 
 def test_path_select():
@@ -19,6 +25,17 @@ def test_file_select():
         raise AssertionError()
 
 
+def test_prints():
+    """Tests for 'prints' function."""
+    func_list = importlib.import_module('test_file')
+    file1 = 'test_file.py'
+    module1 = 'funcs1'
+    if not (runtests.prints(module1, func_list, file1)):
+        raise AssertionError()
+
+
 if __name__ == '__main__':
     test_path_select()
     test_file_select()
+    test_get_dirname()
+    test_prints()
