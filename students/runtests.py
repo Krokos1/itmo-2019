@@ -34,56 +34,55 @@ def get_dirname(dir_name):
     return dir_name
 
 
-def prints(funk, func_list, counter, file1):
+def prints(dirs, func_list, file1):
     """Program outputs."""
-    try:
-        funk()
-    except AssertionError:
-        print(  # noqa: T001
-            '{0} {1} {2} {3}{4}{5} {6} {7}'.format(
-            'Test name:',
-            dirs[counter],
-            'with path:',
-            os.getcwd(),
-            '\\',
-            file1,
-            '- fail\n',
-            traceback.format_exc(),
-            ),
-        )
-    else:
-        print('{0} {1} {2} {3}{4}{5} {6}'.format(  # noqa: T001
-            'Test name:',
-            dirs[counter],
-            'with path:',
-            os.getcwd(),
-            '\\',
-            file1,
-            '- ok',
-            ),
-        )
-
-
-def main_check(dirs, func_list):
-    """Checking all given files."""
-    for counter in range(len(dirs)):  # noqa: WPS518
-        if (dirs[counter][0] != '_'):
-            funk = getattr(func_list, dirs[counter])
-            if (inspect.ismodule(funk)):
-                __import__(dirs[counter])  # noqa: WPS220, WPS421
-            elif (inspect.isfunction(funk)):  # noqa: WPS220
-                prints(funk, dirs, counter, file1)  # noqa: WPS220
+    funk = getattr(func_list, dirs)
+    if (inspect.ismodule(funk)):
+        importlib.import_module(dirs)
+        return True
+    elif (inspect.isfunction(funk)):
+        try:
+            funk()
+        except AssertionError:
+            print(  # noqa: T001
+                '{0} {1} {2} {3}{4}{5} {6} {7}'.format(
+                'Test name:',
+                dirs,
+                'with path:',
+                os.getcwd(),
+                '\\',
+                file1,
+                '- fail\n',
+                traceback.format_exc(),
+                ),
+            )
+            return False
+        else:
+            print('{0} {1} {2} {3}{4}{5} {6}'.format(  # noqa: T001
+                'Test name:',
+                dirs,
+                'with path:',
+                os.getcwd(),
+                '\\',
+                file1,
+                '- ok',
+                ),
+            )
+            return False
 
 
 if __name__ == '__main__':
     dir_name = input('Enter your path: ')  # noqa: WPS421, S322, E501
     dir_name = get_dirname(dir_name)
     file_list = os.listdir(dir_name)
+    res = []
     for file1 in file_list:
         if (file_select(dir_name, file1)):
             func_list = importlib.import_module(file1[0:-3])
             dirs = dir(func_list)  # noqa: WPS421
-            main_check(dirs, func_list)
+            for counter in dirs:
+                if (counter[0] != '_'):
+                    res = prints(counter, func_list, file1)
         else:
             print('{0} {1}'.format(  # noqa: T001
             file1,
