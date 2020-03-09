@@ -35,7 +35,7 @@ date_time = '2019-10-07_03:12:13'
             test_file,
         ],
      ),
-   ])
+])
 def ls_fixture(tmp_path, request):
     """Fixture for ls command."""
     param0 = request.param[0]
