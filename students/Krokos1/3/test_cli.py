@@ -40,4 +40,4 @@ def test_integration(integration_fixture):
     command, parameter = integration_fixture
     callable_string = 'python students/Krokos1/3/cli.py {0} {1}'
     callable_string = callable_string.format(command, parameter)
-    assert subprocess.call(callable_string) == 0  # noqa: S603
+    assert subprocess.call(callable_string, shell=True) == 0  # noqa: S603
