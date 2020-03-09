@@ -88,7 +88,7 @@ def rm_fixture(tmp_path, request):
 
 
 @pytest.fixture(params=[
-    ('conftest1.py', True),
+    ('conftest2.py', True),
     ('unable/.py', False),
     (directory, False),
 ])
@@ -98,7 +98,7 @@ def contains_fixture(tmp_path, request):
     if dot not in param0:
         new_element = tmp_path / param0
         new_element.mkdir()
-    elif param0 == 'conftest1.py':
+    elif param0 == 'conftest2.py':
         my_file = open(param0, 'w+')  # noqa WPS515
         my_file.close()
     yield request.param
