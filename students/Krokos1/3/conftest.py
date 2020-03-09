@@ -53,8 +53,8 @@ def ls_fixture(tmp_path, request):
 @pytest.fixture(params=[
     (name_py, True),
     ('имя.py', True),
-    ('conftest.py', True),
-    ('unable/.py', True),
+    ('conftest.py', False),
+    ('unable/.py', False),
 ])
 def mk_fixture(request):
     """Fixture for mk command."""
@@ -67,8 +67,8 @@ def mk_fixture(request):
 
 @pytest.fixture(params=[
     (name_py, True),
-    (directory, True),
-    ('unable/.py', True),
+    (directory, False),
+    ('unable/.py', False),
 ])
 def rm_fixture(tmp_path, request):
     """Fixture for rm command."""
@@ -87,8 +87,8 @@ def rm_fixture(tmp_path, request):
 
 @pytest.fixture(params=[
     ('conftest.py', True),
-    ('unable/.py', True),
-    (directory, True),
+    ('unable/.py', False),
+    (directory, False),
 ])
 def contains_fixture(tmp_path, request):
     """Fixture for contains command."""
@@ -122,8 +122,8 @@ def contains_fixture(tmp_path, request):
             test_file,
         ],
         [
-            directory,
             test_file,
+            directory,
         ],
      ),
     ('wrongDate',
