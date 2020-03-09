@@ -88,7 +88,7 @@ def rm_fixture(tmp_path, request):
 
 
 @pytest.fixture(params=[
-    ('conftest.py', True),
+    ('conftest1.py', True),
     ('unable/.py', False),
     (directory, False),
 ])
